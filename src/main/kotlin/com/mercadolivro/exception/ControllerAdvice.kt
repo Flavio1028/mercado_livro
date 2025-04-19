@@ -29,6 +29,14 @@ class ControllerAdvice {
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
     }
 
+    @ExceptionHandler(PurchaseException::class)
+    fun handlePurchaseException(ex: PurchaseException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            HttpStatus.BAD_REQUEST.value(), ex.message, ex.errorCode, null
+        )
+        return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValidException(
         ex: MethodArgumentNotValidException,

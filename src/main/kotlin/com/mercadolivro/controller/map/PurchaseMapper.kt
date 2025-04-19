@@ -5,6 +5,7 @@ import com.mercadolivro.model.PurchaseModel
 import com.mercadolivro.service.BookService
 import com.mercadolivro.service.CustomerService
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 @Component
 class PurchaseMapper(
@@ -18,8 +19,9 @@ class PurchaseMapper(
 
         return PurchaseModel(
             customer = customer,
-            books = books,
-            price = books.sumOf { it.price }
+            books = books.toMutableList(),
+            price = books.sumOf { it.price },
+            createdAt = LocalDateTime.now()
         )
     }
 

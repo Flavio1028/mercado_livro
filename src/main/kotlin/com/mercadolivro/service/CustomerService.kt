@@ -6,6 +6,8 @@ import com.mercadolivro.enums.Role
 import com.mercadolivro.exception.NotFoundException
 import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.repository.CustomerRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -16,11 +18,11 @@ class CustomerService(
     private val bCrypt: BCryptPasswordEncoder
 ) {
 
-    fun getAll(name: String?): MutableList<CustomerModel> {
+    fun getAll(pageable: Pageable, name: String?): Page<CustomerModel> {
         name?.let {
-            return customerRepository.findByName(name).toMutableList()
+            return customerRepository.findByName(pageable, name)
         }
-        return customerRepository.findAll().toMutableList()
+        return customerRepository.findAll(pageable)
     }
 
     fun create(customer: CustomerModel) {

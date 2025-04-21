@@ -1,5 +1,6 @@
 package com.mercadolivro.security
 
+import com.mercadolivro.enums.Errors
 import com.mercadolivro.exception.AuthenticationException
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
@@ -36,7 +37,7 @@ class JwtUtil {
                 .setSigningKey(secret!!.toByteArray())
                 .parseClaimsJws(token).body
         } catch (e: Exception) {
-            throw AuthenticationException("Token invalido.", "9999")
+            throw AuthenticationException(Errors.ML002.message, Errors.ML002.code)
         }
     }
 

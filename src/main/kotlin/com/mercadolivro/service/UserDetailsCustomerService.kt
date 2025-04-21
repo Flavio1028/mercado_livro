@@ -1,5 +1,6 @@
 package com.mercadolivro.service
 
+import com.mercadolivro.enums.Errors
 import com.mercadolivro.exception.AuthenticationException
 import com.mercadolivro.repository.CustomerRepository
 import com.mercadolivro.security.UserCustomerDetails
@@ -14,7 +15,7 @@ class UserDetailsCustomerService(
 
     override fun loadUserByUsername(id: String): UserDetails {
         val customer = customerRepository.findById(id.toInt()).orElseThrow {
-            AuthenticationException("Usuario nao encontrado", "9999")
+            AuthenticationException(Errors.ML201.message.format(id), Errors.ML201.code)
         }
         return UserCustomerDetails(customer)
     }

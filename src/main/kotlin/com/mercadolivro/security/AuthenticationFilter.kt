@@ -2,6 +2,7 @@ package com.mercadolivro.security
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.mercadolivro.controller.request.LoginRequest
+import com.mercadolivro.enums.Errors
 import com.mercadolivro.exception.AuthenticationException
 import com.mercadolivro.repository.CustomerRepository
 import org.springframework.security.authentication.AuthenticationManager
@@ -25,7 +26,7 @@ class AuthenticationFilter(
             val authToken = UsernamePasswordAuthenticationToken(id, loginRequest.password)
             return authenticationManager.authenticate(authToken)
         } catch (e: Exception) {
-            throw AuthenticationException("Falha ao autenticar", "999")
+            throw AuthenticationException(Errors.ML001.message, Errors.ML001.code)
         }
     }
 

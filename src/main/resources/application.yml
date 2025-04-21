@@ -10,6 +10,10 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
+jwt:
+  secret: 87b0ec4e-cf50-4fba-8b51-59c7b13aff5f
+  expiration: 999999
+
 ---
 spring:
   config:

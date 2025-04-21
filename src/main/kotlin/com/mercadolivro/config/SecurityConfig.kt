@@ -43,7 +43,7 @@ class SecurityConfig(
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable()
         http.authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/customer").permitAll()
+            .antMatchers(HttpMethod.POST, "/customers").permitAll()
             .antMatchers(*ADMIN_MATCHERS).hasAuthority(Role.ADMIN.description)
             .anyRequest().authenticated()
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))

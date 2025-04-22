@@ -6,6 +6,7 @@ plugins {
 	kotlin("jvm") version "1.4.30"
 	kotlin("plugin.spring") version "1.4.30"
 	kotlin("plugin.jpa") version "1.4.30"
+	jacoco
 }
 
 group = "com.mercadolivro"
@@ -34,7 +35,12 @@ dependencies {
 	implementation("org.flywaydb:flyway-core:7.7.0")
 	implementation("mysql:mysql-connector-java")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	// Testes
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+	}
+	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+	testImplementation("io.mockk:mockk:1.12.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -44,6 +50,6 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-tasks.withType<Test> {
+tasks.test {
 	useJUnitPlatform()
 }

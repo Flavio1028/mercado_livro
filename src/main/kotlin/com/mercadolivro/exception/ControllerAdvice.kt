@@ -53,7 +53,7 @@ class ControllerAdvice {
     @ExceptionHandler(AccessDeniedException::class)
     fun handleNotFoundException(ex: AccessDeniedException, request: WebRequest): ResponseEntity<ErrorResponse> {
         val errorResponse = ErrorResponse(
-            HttpStatus.FORBIDDEN.value(), Errors.ML000.message, Errors.ML000.message, null
+            HttpStatus.FORBIDDEN.value(), Errors.ML000.message, Errors.ML000.code, null
         )
         return ResponseEntity(errorResponse, HttpStatus.FORBIDDEN)
     }

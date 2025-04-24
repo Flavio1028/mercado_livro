@@ -40,6 +40,7 @@ dependencies {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
 	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+	testImplementation("org.springframework.security:spring-security-test:5.5.2")
 	testImplementation("io.mockk:mockk:1.12.0")
 }
 

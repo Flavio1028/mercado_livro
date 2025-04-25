@@ -2,6 +2,7 @@ package com.mercadolivro.service
 
 import com.mercadolivro.enums.BookStatus
 import com.mercadolivro.event.PurchaseEvent
+import com.mercadolivro.exception.NotFoundException
 import com.mercadolivro.exception.PurchaseException
 import com.mercadolivro.helper.buildBook
 import com.mercadolivro.helper.buildPurchase
@@ -61,6 +62,22 @@ class PurchaseServiceTest {
 
         assertEquals("Book ${book.id} cannot be sold.", error.message)
         assertEquals("ML-203", error.errorCode)
+
+        verify(exactly = 1) { bookService.findAllByIds(any()) }
+        verify(exactly = 0) { purchaseRepository.save(purchase) }
+        verify(exactly = 0) { applicationEventPublisher.publishEvent(any()) }
+    }
+
+    @Test
+    fun `should throw Not Found Exception when book is not found`() {
+        val purchase = buildPurchase(books = listOf(buildBook(id = 1)).toMutableList())
+
+        every { bookService.findAllByIds(any()) } returns listOf()
+
+        val error = assertThrows<NotFoundException> { purchaseService.create(purchase) }
+
+        assertEquals("Book ${purchase.books.map { it.id }.toSet()} not exists.", error.message)
+        assertEquals("ML-101", error.errorCode)
 
         verify(exactly = 1) { bookService.findAllByIds(any()) }
         verify(exactly = 0) { purchaseRepository.save(purchase) }
